@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh10w4aa6fdhv"]
+
+[ext_resource type="Texture2D" uid="uid://1sqhv0wglfca" path="res://BG_FF2_09.png" id="1_kdkxg"]
+[ext_resource type="PackedScene" uid="uid://c8pmhm5r4y55x" path="res://enemy_group.tscn" id="1_sqmju"]
+[ext_resource type="PackedScene" uid="uid://cso16ptxsys7n" path="res://player_group.tscn" id="3_r3x7u"]
+
+[node name="BattleScene" type="Node2D"]
+texture_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.505882, 0.505882, 0.505882, 1)
+offset_left = -16.0
+offset_top = -9.0
+offset_right = 304.0
+offset_bottom = 171.0
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_kdkxg")
+expand_mode = 1
+
+[node name="EnemyGroup" parent="." instance=ExtResource("1_sqmju")]
+position = Vector2(55, 47)
+
+[node name="PlayerGroup" parent="." instance=ExtResource("3_r3x7u")]
+position = Vector2(248, 54)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="choice" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -55.0
+offset_right = 29.0
+offset_bottom = 46.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.501243, 0.501243)
+
+[node name="Attack" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Defend" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+disabled = true
+text = "Defend"
+
+[node name="Run" type="Button" parent="CanvasLayer/choice"]
+layout_mode = 2
+disabled = true
+text = "Run"
+
+[connection signal="next_player" from="EnemyGroup" to="PlayerGroup" method="_on_enemy_group_next_player"]
+[connection signal="pressed" from="CanvasLayer/choice/Attack" to="EnemyGroup" method="_on_attack_pressed"]
